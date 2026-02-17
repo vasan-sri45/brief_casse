@@ -23,8 +23,8 @@ const generateToken = (userId, res) => {
 
   res.cookie(cookieName, token, {
     httpOnly: true,                   
-    secure: isProd,                   
-    sameSite: 'Lax',                  
+    secure: isProd ? true : false,                
+    sameSite: isProd ? 'None' : 'Lax',                 
     path: '/',                        
     maxAge: FIFTEEN_DAYS_MS,          
   });
