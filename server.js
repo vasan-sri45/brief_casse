@@ -31,7 +31,7 @@ const corsOptions = {
 };
 
 app.use(cors(corsOptions));                 // handle CORS for all routes [web:219]
-app.options("/api/{*splat}", cors(corsOptions)); // preflight for all /api routes (v5-safe) [web:241]
+// app.options("/api/{*splat}", cors(corsOptions)); 
 
 app.use(cookieParser());
 app.use(express.json());
