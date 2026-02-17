@@ -39,6 +39,9 @@ app.use(express.urlencoded({ extended: true }));
 
 const Port = process.env.PORT || 4500;
 
+app.set("trust proxy", 1);
+
+
 // Mount under /api
 app.use("/api", userAuthRouter);
 app.use("/api", employeeAuthRouter);
