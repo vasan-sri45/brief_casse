@@ -13,6 +13,7 @@ import serviceRoutes from "./routes/service/service.routes.js";
 import BlogRoutes from "./routes/admin/blog.route.js";
 import PaidServiceRoutes from "./routes/selling/paidService.route.js";
 import paymentRoutes from "./routes/service/payment.routes.js";
+import contactRouter from "./routes/service/contact.routes.js";
 import { notFound, errorHandler } from "./middleware/errorHandler.js";
 
 
@@ -54,6 +55,7 @@ app.use("/api",BlogRoutes);
 app.use("/api/paid",PaidServiceRoutes);
 
 app.use("/api/payment", paymentRoutes);
+app.use("/api", contactRouter);
 
 console.log("RESEND_API_KEY loaded?", !!process.env.RESEND_API_KEY);
 

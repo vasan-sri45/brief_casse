@@ -84,26 +84,58 @@
 
 
 
+// import { Resend } from "resend";
+
+// const sendEmail = async (options) => {
+//   const apiKey = process.env.RESEND_API_KEY;
+
+//   console.log("👉 Using RESEND_API_KEY:", apiKey?.slice(0, 10));
+
+//   const resend = new Resend(apiKey);
+
+//   const response = await resend.emails.send({
+//     from: process.env.FROM_EMAIL,
+//     to: options.email,
+//     subject: options.subject,
+//     html: options.html || "",
+//     text: options.text || options.message || "",
+//   });
+
+//   console.log("👉 Resend response:", response);
+
+//   console.log("Email sent to:", options.email);
+// };
+
+// export default sendEmail;
+
 import { Resend } from "resend";
 
+const resend = new Resend(process.env.RESEND_API_KEY);
+
 const sendEmail = async (options) => {
-  const apiKey = process.env.RESEND_API_KEY;
+  try {
+    const response = await resend.emails.send({
+      from: process.env.FROM_EMAIL,
 
-  console.log("👉 Using RESEND_API_KEY:", apiKey?.slice(0, 10));
+      // allow string or array
+      to: Array.isArray(options.email) ? options.email : [options.email],
 
-  const resend = new Resend(apiKey);
+      subject: options.subject,
 
-  const response = await resend.emails.send({
-    from: process.env.FROM_EMAIL,
-    to: options.email,
-    subject: options.subject,
-    html: options.html || "",
-    text: options.text || options.message || "",
-  });
+      html: options.html || "",
+      text: options.text || options.message || "",
 
-  console.log("👉 Resend response:", response);
+      // optional reply-to (needed for contact form)
+      reply_to: options.replyTo || undefined,
+    });
 
-  console.log("Email sent to:", options.email);
+    console.log("Email sent:", response?.data?.id);
+    return response;
+
+  } catch (error) {
+    console.error("Resend Error:", error);
+    throw error;
+  }
 };
 
 export default sendEmail;
