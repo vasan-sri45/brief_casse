@@ -1,4 +1,4 @@
-import sendEmail from "../../utils/email";
+import sendEmail from "../../utils/email.js";
 
 export const sendContactMail = async (req, res) => {
   try {
